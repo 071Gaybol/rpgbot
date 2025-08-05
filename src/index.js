@@ -57,12 +57,12 @@ client.on('interactionCreate', async interaction => {
     }
 
     if (interaction.isChatInputCommand()) {
-  const command = client.commands.get(interaction.commandName);
-  if (!command) return;
+      const command = client.commands.get(interaction.commandName);
+      if (!command) return;
 
-  try {
-    await command.execute(interaction);
-  } catch (error) {
+      try {
+        await command.execute(interaction);
+      } catch (error) {
         console.error('Erro ao executar comando:', error);
         await interaction.reply({ 
           content: '❌ Erro ao executar o comando!', 
@@ -74,7 +74,6 @@ client.on('interactionCreate', async interaction => {
     console.error('Erro geral no interactionCreate:', error);
   }
 });
-
 
 async function handleCriarFichaDescritivoModal(interaction) {
   try {
@@ -126,6 +125,7 @@ async function handleCriarFichaDescritivoModal(interaction) {
       ephemeral: true
     });
   }
+}
 
 async function handleCriarFichaAtributosModal(interaction) {
   try {
@@ -145,12 +145,21 @@ async function handleCriarFichaAtributosModal(interaction) {
       });
     }
 
-    const { criarFicha, validarAtributos, calcularPvMaximo, calcularPmMaximo } = require('./utils/fichaUtils');
+    const { criarFichaMesa, validarAtributos, calcularPvMaximo, calcularPmMaximo } = require('./utils/fichaUtils');
+    const { getActiveMesa } = require('./utils/mesaContext');
 
     const validacao = validarAtributos({ forca, habilidade, resistencia, armadura, poderDeFogo });
     if (!validacao.valido) {
       return interaction.reply({
         content: `❌ ${validacao.mensagem}`,
+        ephemeral: true
+      });
+    }
+
+    const mesaId = getActiveMesa(interaction.channelId);
+    if (!mesaId) {
+      return interaction.reply({
+        content: '❌ Nenhuma mesa ativa neste canal!',
         ephemeral: true
       });
     }
@@ -166,7 +175,7 @@ async function handleCriarFichaAtributosModal(interaction) {
     const pvMaximo = calcularPvMaximo(resistencia);
     const pmMaximo = calcularPmMaximo(habilidade);
 
-    const resultado = criarFicha(userId, {
+    const resultado = criarFichaMesa(userId, {
       nome: dadosTemp.nome,
       forca,
       habilidade,
@@ -182,7 +191,7 @@ async function handleCriarFichaAtributosModal(interaction) {
       vantagens: dadosTemp.vantagens,
       desvantagens: dadosTemp.desvantagens,
       historia: dadosTemp.historia
-    });
+    }, mesaId);
 
     if (global.dadosTempFichas) delete global.dadosTempFichas[userId];
 
@@ -228,6 +237,7 @@ async function handleCriarFichaAtributosModal(interaction) {
       ephemeral: true
     });
   }
+}
 
 async function handleButtonInteraction(interaction) {
   try {
@@ -322,13 +332,14 @@ async function handleContinuarAtributos(interaction) {
 
     modal.addComponents(primeiraLinha, segundaLinha, terceiraLinha, quartaLinha, quintaLinha);
 
-      await interaction.showModal(modal);
-} catch (error) {
-  console.error('Erro ao mostrar modal de atributos:', error);
-  await interaction.reply({
-    content: '❌ Erro ao mostrar modal de atributos!',
-    ephemeral: true
-  });
+    await interaction.showModal(modal);
+  } catch (error) {
+    console.error('Erro ao mostrar modal de atributos:', error);
+    await interaction.reply({
+      content: '❌ Erro ao mostrar modal de atributos!',
+      ephemeral: true
+    });
+  }
 }
 
 async function handleCriarMesaModal(interaction) {
@@ -398,6 +409,7 @@ async function handleCriarMesaModal(interaction) {
       ephemeral: true
     });
   }
+}
 
 async function handleAtivarMesaButton(interaction) {
   try {

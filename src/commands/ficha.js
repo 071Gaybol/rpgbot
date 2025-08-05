@@ -207,7 +207,7 @@ module.exports = {
     await interaction.reply({ embeds: [embed] });
   },
 
-  async verFichaMestre(interaction, mesaId) 
+  async verFichaMestre(interaction, mesaId) {
     const cargoMestre = interaction.member.roles.cache.find(role => 
       role.name === 'Mestre'
     );
@@ -239,7 +239,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`📋 Ficha de ${fichaEncontrada.nome} (Mestre)`)
       .setDescription('**3D&T • Defensores de Tóquio 3ª Edição Alpha**')
-      .setColor(0xff66
+      .setColor(0xff6600)
       .addFields(
         { 
           name: '⚔️ Características', 
@@ -349,7 +349,7 @@ module.exports = {
 
   async autocomplete(interaction) {
     const focusedValue = interaction.options.getFocused();
-    const subcommand = interaction.options.getSubcommand()
+    const subcommand = interaction.options.getSubcommand();
     if (subcommand === 'ver-mestre') {
       try {
         const mesaId = getActiveMesa(interaction.channelId);
