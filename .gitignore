@@ -2,3 +2,7 @@
 cursor.rules
 node_modules
 package-lock.json
+
+# Ignorar todos os arquivos de data exceto rollMessages.json
+src/data/*.json
+!src/data/rollMessages.json
