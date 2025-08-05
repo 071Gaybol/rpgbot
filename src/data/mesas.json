@@ -1,19 +1,4 @@
 {
   "mesas": {
-    "mesa_1754195099320_sajzeu9c0": {
-      "id": "mesa_1754195099320_sajzeu9c0",
-      "nome": "Mesa malucos",
-      "descricao": "uauau",
-      "mestreId": "346106508729253888",
-      "canalId": null,
-      "status": "inativa",
-      "criadaEm": "2025-08-03T04:24:59.320Z",
-      "atualizadaEm": "2025-08-03T04:24:59.320Z",
-      "configuracoes": {
-        "sistema": "3DET",
-        "nivelMaximo": 20,
-        "permitirPvNegativo": false
-      }
-    }
   }
 }
