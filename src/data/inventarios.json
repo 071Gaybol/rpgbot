@@ -1,0 +1,14 @@
+{
+  "jogadores": {
+    "346106508729253888": {
+      "itens": [
+        {
+          "id": "espada_ferro",
+          "quantidade": 2
+        }
+      ],
+      "pesoMaximo": 50,
+      "pesoAtual": 6
+    }
+  }
+}
