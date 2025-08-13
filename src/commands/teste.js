@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
-const rollMessagesPath = path.join(__dirname, '..', 'data', 'rollMessages.json');
+const rollMessagesPath = path.join(__dirname, '..', 'messages', 'rollMessages.json');
 const rollMessages = JSON.parse(fs.readFileSync(rollMessagesPath, 'utf8'));
 
 module.exports = {

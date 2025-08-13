@@ -104,8 +104,9 @@ rpgbot/
 │   │   ├── inventario.js
 │   │   ├── add-inventario.js
 │   │   └── remove-inventario.js
-│   ├── data/
+│   ├── messages/
 │   │   ├── rollMessages.json
+│   ├── data/
 │   │   ├── itens.json
 │   │   └── inventarios.json
 │   ├── utils/
@@ -141,4 +142,4 @@ Edite `src/data/itens.json` para adicionar novos itens:
 ```
 
 ### Personalizando Mensagens
-Edite `src/data/rollMessages.json` para personalizar as mensagens de rolagem.
+Edite `src/messages/rollMessages.json` para personalizar as mensagens de rolagem.
