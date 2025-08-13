@@ -129,9 +129,22 @@ module.exports = {
           'consumivel': '🪄',
           'magicos': '🔮'
         }[tipo] || '📦';
+        
         const itensTexto = itensTipo
-          .map(item => `${emoji} **${item.nome}** (${item.quantidade}x)`)
+          .map(item => {
+            const emojiSubtipo = {
+              'espada': '🗡️',
+              'machado': '🪓',
+              'lança': '🏹',
+              'arco': '🏹',
+              'escudo': '🛡️',
+              'pocao': '🪄',
+              'varinha': '🔮'
+            }[item.subtipo] || '📦';
+            return `${emojiSubtipo} **${item.nome}** (${item.quantidade}x)`;
+          })
           .join('\n');
+
         embed.addFields({
           name: `${emoji} ${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`,
           value: itensTexto,
