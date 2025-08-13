@@ -71,7 +71,8 @@ module.exports = {
       for (let i = 0; i < quantidade; i++) {
         resultados.push(Math.floor(Math.random() * faces) + 1);
       }
-      const soma = resultados.reduce((a, b) => a + b, 0) + modificador;
+      const somaDados = resultados.reduce((a, b) => a + b, 0);
+      const soma = somaDados + modificador;
       const maior = Math.max(...resultados);
 
       let categoria, cor, emoji, titulo;
@@ -117,27 +118,25 @@ module.exports = {
         emojiBg = '🟩';
       }
 
-      let resultadosTexto = '';
-      let dadosIndividuaisTexto = '';
-      if (quantidade === 1) {
-        resultadosTexto = `${emojiBg} __**${soma}**__${modificador !== 0 ? ` (${modificadorTexto})` : ''}`;
+      // Organização da interface
+      const dadosIndividuaisTexto = resultados.map((r, i) => `🎲 **${r}**`).join('  ');
+      
+      let resultadoFinalTexto = '';
+      if (modificador !== 0) {
+        resultadoFinalTexto = `${emojiBg} **${somaDados}** ${modificadorTexto} = **${soma}**`;
       } else {
-        resultadosTexto = `${emojiBg} __**${soma}**__${modificador !== 0 ? ` (${modificadorTexto})` : ''}`;
-        dadosIndividuaisTexto = resultados.map((r, i) => `🎲 ${r}`).join(' | ');
+        resultadoFinalTexto = `${emojiBg} **${soma}**`;
       }
 
       const nomeJogador = interaction.member?.displayName || interaction.user.username;
 
       const embed = new EmbedBuilder()
         .setTitle(`${emoji} ${titulo}`)
-        .setDescription(`**${nomeJogador}** rolou **${quantidade}d${faces}**`)
+        .setDescription(`**${nomeJogador}** rolou **${quantidade}d${faces}**${modificador !== 0 ? ` ${modificadorTexto}` : ''}`)
         .setColor(cor)
         .addFields(
-          { name: '🎲 Resultado', value: resultadosTexto, inline: true },
-          { name: '📊 Faces', value: `**${faces}**`, inline: true },
-          ...(quantidade > 1 ? [
-            { name: '🎲 Dados', value: dadosIndividuaisTexto, inline: false },
-          ] : []),
+          { name: '🎯 Dados', value: dadosIndividuaisTexto, inline: false },
+          { name: '📊 Total', value: resultadoFinalTexto, inline: false },
           { name: '💬 Comentário', value: `*${mensagemAleatoria}*`, inline: false }
         )
         .setFooter({
